@@ -6,10 +6,15 @@ import { readFile, writeFile } from 'node:fs/promises';
 // Si le fichier n'existe pas ou n'est pas du JSON valide, laissez l'erreur remonter : le menu l'affichera.
 export async function chargerJson(chemin) {
   const a= await readFile(chemin,'utf-8')
- throw new Error('TODO : coder chargerJson dans src/stockage.js');
+return JSON.parse(a)
+
+  throw new Error('TODO : coder chargerJson dans src/stockage.js');
+   
 }
 
 // Écrit le tableau dans le fichier, au format JSON indenté de 2 espaces.
  export async function enregistrerJson(chemin, enregistrements) {
+  const c = JSON.stringify(enregistrements,null,2)
+  return await writeFile (chemin,c,'utf-8')
  throw new Error('TODO : coder enregistrerJson dans src/stockage.js');
 }
