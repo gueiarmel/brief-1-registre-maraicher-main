@@ -38,16 +38,59 @@ export function trouverParId(operations, id) {
 // obligatoires (n'importe quel texte non vide) · operation présente dans OPERATIONS
 // · coutFCFA nombre positif ou nul.
 export function verifierOperation(saisie, operations) {
-  throw new Error('TODO : coder verifierOperation dans src/registre.js');
-}
+  const erreurs = [];
+  if(saisie.id === '') {
+    erreurs.push ('id obligatoire')
+  }
+
+  else if (trouverParId(operations,saisie.id)!== undefined) {
+    erreurs.push (`identifiant ${saisie.id} existe deja`)
+  }
+  if(!estDateValide(saisie.date)) {
+    erreurs.push ('Date invalide, la date doit etre au foermat AAAA-MM-JJ')
+  }
+  if(saisie.parcelle==='') {
+    erreurs.push ('Veuillez entrer une parcelle')
+  }
+
+  if (saisie.culture === '') {
+    erreurs.push ('Entrez un culture');
+  }
+
+  if(!OPERATIONS.includes(saisie.operation)) {
+     erreurs.push ('Entrez une operation de la liste fermée : semis, arrosage, désherbage, repiquage, récolte')
+  }
+  const a = versNombre(saisie.coutFCFA);
+   if (Number.isNaN(a) || a<0) {
+     erreurs.push('entrez un cout positif')
+  }
+     return erreurs
+  }
+
+  //throw new Error('TODO : coder verifierOperation dans src/registre.js');
+
 
 // Fabrique l'opération à enregistrer à partir d'une saisie VALIDE : coutFCFA devient un nombre.
 export function creerOperation(saisie) {
-  throw new Error('TODO : coder creerOperation dans src/registre.js');
+  return {
+    id : saisie.id,
+    date : saisie.date,
+    parcelle : saisie.parcelle,
+    culture : saisie.culture,
+    operation : saisie.operation,
+    coutFCFA : versNombre(saisie.coutFCFA)
+  }
+  //throw new Error('TODO : coder creerOperation dans src/registre.js');
 }
 
 // Ajoute la saisie au registre si elle est valide (verifierOperation, puis creerOperation).
 // Renvoie les erreurs : [] si l'opération a été ajoutée ; sinon les messages, et rien n'est ajouté.
 export function ajouterOperation(operations, saisie) {
-  throw new Error('TODO : coder ajouterOperation dans src/registre.js');
+const erreur = verifierOperation(saisie,operations)
+if(erreur.length>0){
+  return erreur;
+}
+operations.push(creerOperation(saisie));
+return []
+ // throw new Error('TODO : coder ajouterOperation dans src/registre.js');
 }
