@@ -1,13 +1,5 @@
 [
   {
-    "id": "O01",
-    "date": "2026-10-20",
-    "parcelle": "P1",
-    "culture": "tomate",
-    "operation": "semis",
-    "coutFCFA": 3000
-  },
-  {
     "id": "O02",
     "date": "2026-10-20",
     "parcelle": "P2",
@@ -78,5 +70,13 @@
     "culture": "aubergine",
     "operation": "désherbage",
     "coutFCFA": 6000
+  },
+  {
+    "id": "O20",
+    "date": "2026-11-12",
+    "parcelle": "P3",
+    "culture": "choux",
+    "operation": "semis",
+    "coutFCFA": 2500
   }
 ]

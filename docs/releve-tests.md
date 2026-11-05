@@ -8,11 +8,11 @@
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
+| ✏️ | | |Guei Armel|
+| ✏️ | | |Guei Armel|
+| ✏️ | | |Guei Armel|
+| ✏️ | | |Guei Armel|
+| ✏️ | | |Guei Armel|
+| ✏️ | | |Guei Armel|
 
 **Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : ✏️
