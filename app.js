@@ -10,10 +10,10 @@ import { coutMinMax, syntheseParParcelle, totalCouts } from './src/synthese.js';
 
 const FICHIER_DONNEES = 'donnees/operations.json';
 function afficherAccueil() {
-  console.log('==============================');
+  console.log('==================================================');
   console.log('   REGISTRE DES OPÉRATIONS MARAÎCHÈRES');
   console.log('   Exploitation maraîchère pédagogique');
-  console.log('==============================');
+  console.log('==================================================');
 }
 
 function afficherMenu() {
@@ -165,13 +165,13 @@ async function main() {
           case '4': await trier(operations); break;
           case '5': synthese(operations); break;
           default:
-            console.log(`Choix inconnu : « ${choix} ». Tapez un chiffre du menu.`);
+            console.log(`Choix inconnu : ${choix} . Tapez un chiffre du menu.`);
         }
       } catch (erreur) {
         if (erreur.message.startsWith('TODO')) {
           console.log(`À compléter : ${erreur.message}`);
         } else {
-          console.log(`Erreur inattendue : ${erreur.message}`);
+          console.log(`Erreur inattendue : ${erreur.message}`)
         }
       }
     }
