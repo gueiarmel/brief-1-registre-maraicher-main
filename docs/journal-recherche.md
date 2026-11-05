@@ -4,6 +4,6 @@
 
 | Ce que je cherchais | Où | Ce que j'ai compris | Utilisé dans |
 | --- | --- | --- | --- |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
+|Savoir filtrer les operation |IA et MDN |Filter: permet de récupérer plusieurs éléments qui respectent une condition | recherche|
+|Savoir transformer un objet en JSON |Cours et Amis |JSON.stringify() | Stockage|
+|savoir trier les operation | IA | Permet de classer leséléments d'un tableau selon un critère. |recherche |
