@@ -6,8 +6,8 @@ import { demander, fermerSaisie, ouvrirSaisie } from './src/saisie.js';
 import { chargerJson, enregistrerJson } from './src/stockage.js';
 import { OPERATIONS, ajouterOperation, formaterOperation, listerOperations, trouverParId } from './src/registre.js';
 import { filtrerParCulture, filtrerParParcelle, trierParCout, trierParDate } from './src/recherche.js';
-import { coutMinMax, syntheseParParcelle, totalCouts } from './src/synthese.js';
-import{supprimerOperation, modifierOperation,trierParCoutDecroissant} from './src/bonus.js';
+import { coutMinMax, syntheseParParcelle, totalCouts} from './src/synthese.js';
+import{supprimerOperation, modifierOperation,trierParCoutDecroissant, parcelleLaPlusCouteuse} from './src/bonus.js';
 const FICHIER_DONNEES = 'donnees/operations.json';
 
 function afficherAccueil() {
