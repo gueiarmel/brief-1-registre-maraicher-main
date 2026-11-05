@@ -8,11 +8,11 @@
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-| ✏️ | | |Guei Armel|
-| ✏️ | | |Guei Armel|
-| ✏️ | | |Guei Armel|
-| ✏️ | | |Guei Armel|
-| ✏️ | | |Guei Armel|
-| ✏️ | | |Guei Armel|
+|npm test |45 tests réussis |45 tests reussis|Guei Armel|
+| npm run test bonus |8 tests réussis|8 tests réussis |Guei Armel|
+| 8 tests réussis |8 tests réussis |8 tests réussis |Guei Armel|
+| npm run test synthèse |5 tests réussis |5 tests réussis |Guei Armel|
+| npm run test registre |13 tests réussis |13 tests réussis |Guei Armel|
+| ✏️ | | | |
 
 **Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : ✏️
