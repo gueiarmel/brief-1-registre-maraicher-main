@@ -8,11 +8,11 @@
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-|npm test |45 tests réussis |45 tests reussis|Guei Armel|
-| npm run test bonus |8 tests réussis|8 tests réussis |Guei Armel|
-| 8 tests réussis |8 tests réussis |8 tests réussis |Guei Armel|
-| npm run test synthèse |5 tests réussis |5 tests réussis |Guei Armel|
-| npm run test registre |13 tests réussis |13 tests réussis |Guei Armel|
-| ✏️ | | | |
+|total des coûts |40 000 FCFA |40 000 FCFA|Guei Armel|
+| coût minimum | 1 500 FCFA|1 500 FCFA |Guei Armel|
+|coût maximum  |8000 FCFA |8000 FCFA|Guei Armel|
+| le tri par coût | du plus grands au plus petit |commence par `O05` |Guei Armel|
+|  registre vide  | Tableau vide | 0 |Guei Armel|
+|Recherche `O03` | P1, tomate, arrosage, 2 000 FCFA |trouvée |Guei Armel |
 
 **Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : ✏️
