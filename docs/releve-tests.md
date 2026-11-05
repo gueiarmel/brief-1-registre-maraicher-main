@@ -8,11 +8,10 @@
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-|total des coûts |40 000 FCFA |40 000 FCFA|Guei Armel|
-| coût minimum | 1 500 FCFA|1 500 FCFA |Guei Armel|
-|coût maximum  |8000 FCFA |8000 FCFA|Guei Armel|
-| le tri par coût | du plus grands au plus petit |commence par `O05` |Guei Armel|
-|  registre vide  | Tableau vide | 0 |Guei Armel|
-|Recherche `O03` | P1, tomate, arrosage, 2 000 FCFA |trouvée |Guei Armel |
+|total des coûts |40 000 FCFA |39 500 FCFA|DIBY Konan François Ebenezer|
+| coût minimum | 1 500 FCFA|1 500 FCFA |DIBY Konan François Ebenezer|
+|coût maximum  |8000 FCFA |8000 FCFA|DIBY Konan François Ebenezer|
+| le tri par coût croissant | commence par `O05` |commence par `O05` |DIBY Konan François Ebenezer|
+|Recherche `O03` | P1, tomate, arrosage, 2 000 FCFA |P1, tomate, arrosage, 2 000 FCFA  | DIBY Konan François Ebenezer |
 
 **Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : ✏️
