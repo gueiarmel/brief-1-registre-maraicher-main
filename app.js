@@ -9,10 +9,174 @@ import { filtrerParCulture, filtrerParParcelle, trierParCout, trierParDate } fro
 import { coutMinMax, syntheseParParcelle, totalCouts } from './src/synthese.js';
 
 const FICHIER_DONNEES = 'donnees/operations.json';
+function afficherAccueil() {
+  console.log('==============================');
+  console.log('   REGISTRE DES OPÉRATIONS MARAÎCHÈRES');
+  console.log('   Exploitation maraîchère pédagogique');
+  console.log('==============================');
+}
+
+function afficherMenu() {
+  console.log('');
+  console.log('--------------------- MENU ---------------------');
+  console.log('1. Ajouter une opération');
+  console.log('2. Lister les opérations');
+  console.log('3. Rechercher (identifiant, parcelle, culture)');
+  console.log('4. Trier (coût, date)');
+  console.log('5. Synthèse des dépenses');
+  console.log('0. Quitter');
+}
+
+async function ajouter(operations) {
+  console.log('--- Ajouter une opération ---');
+  const id = await demander('Identifiant (ex. O11) : ');
+  if (id === null) return;
+  const date = await demander('Date (AAAA-MM-JJ) : ');
+  if (date === null) return;
+  const parcelle = await demander('Parcelle (ex. P1) : ');
+  if (parcelle === null) return;
+  const culture = await demander('Culture (ex. tomate) : ');
+  if (culture === null) return;
+  const operation = await demander(`Opération (${OPERATIONS.join(', ')}) : `);
+  if (operation === null) return;
+  const cout = await demander('Coût en FCFA : ');
+  if (cout === null) return;
+
+  const saisie = {
+    id: id.toUpperCase(),
+    date,
+    parcelle: parcelle.toUpperCase(),
+    culture: culture.toLowerCase(),
+    operation: operation.toLowerCase(),
+    coutFCFA: cout,
+  };
+
+  const erreurs = ajouterOperation(operations, saisie);
+  if (erreurs.length === 0) {
+    await enregistrerJson(FICHIER_DONNEES, operations);
+    console.log(`Opération ${saisie.id} ajoutée. Le registre compte ${operations.length} opération(s).`);
+  } else {
+    console.log('Opération refusée :');
+    for (const erreur of erreurs) {
+      console.log(`  - ${erreur}`);
+    }
+    console.log(`Le registre compte toujours ${operations.length} opération(s).`);
+  }
+}
+
+function lister(operations) {
+  console.log(`--- Liste des opérations (${operations.length}) ---`);
+  console.log(listerOperations(operations));
+}
+
+async function rechercher(operations) {
+  console.log('--- Rechercher ---');
+  console.log('1. Par identifiant');
+  console.log('2. Par parcelle');
+  console.log("3. Les opérations d'une culture");
+  const choix = await demander('Votre choix : ');
+  if (choix === null) return;
+
+  if (choix === '1') {
+    const reponse = await demander('Identifiant : ');
+    if (reponse === null) return;
+    const id = reponse.toUpperCase();
+    const trouvee = trouverParId(operations, id);
+    console.log(`trouvee === undefined ? Opération ${id} introuvable. : formaterOperation(trouvee)`);
+  } else if (choix === '2') {
+    const reponse = await demander('Parcelle : ');
+    if (reponse === null) return;
+    const parcelle = reponse.toUpperCase();
+    const resultat = filtrerParParcelle(operations, parcelle);
+    console.log(`${resultat.length} opération(s) sur la parcelle ${parcelle} :`);
+    console.log(listerOperations(resultat));
+  } else if (choix === '3') {
+    const reponse = await demander('Culture : ');
+    if (reponse === null) return;
+    const culture = reponse.toLowerCase();
+    const resultat = filtrerParCulture(operations, culture);
+    console.log(`${resultat.length} opération(s) pour la culture ${culture} :`);
+    console.log(listerOperations(resultat));
+  } else {
+    console.log('Choix inconnu : retour au menu.');
+  }
+}
+
+async function trier(operations) {
+  console.log('--- Trier ---');
+  console.log('1. Par coût croissant');
+  console.log('2. Par date, de la plus ancienne à la plus récente');
+  const choix = await demander('Votre choix : ');
+  if (choix === null) return;
+
+  if (choix === '1') {
+    console.log(listerOperations(trierParCout(operations)));
+  } else if (choix === '2') {
+    console.log(listerOperations(trierParDate(operations)));
+  } else {
+    console.log('Choix inconnu : retour au menu.');
+  }
+}
+
+function synthese(operations) {
+  console.log('--- Synthèse des dépenses enregistrées ---');
+  console.log(`Nombre d'opérations : ${operations.length}`);
+  console.log(`Total des coûts : ${totalCouts(operations)} FCFA`);
+  console.log('Par parcelle :');
+  for (const [parcelle, donnees] of Object.entries(syntheseParParcelle(operations))) {
+    console.log(`  ${parcelle} : ${donnees.nombre} opération(s), ${donnees.total} FCFA`);
+  }
+  const minMax = coutMinMax(operations);
+  if (minMax === null) {
+    console.log('Coût minimum et maximum : aucune donnée.');
+  } else {
+    console.log(`Coût minimum : ${minMax.min} FCFA · Coût maximum : ${minMax.max} FCFA`);
+  }
+  console.log('Rappel : ce sont des dépenses. Sans les revenus, elles ne mesurent pas la rentabilité.');
+}
 
 async function main() {
   ouvrirSaisie();
-  console.log("À compléter : écrivez le menu dans app.js (fiches/3-ajouter-lister.md).");
+  afficherAccueil();
+
+  let operations = [];
+  try {
+    operations = await chargerJson(FICHIER_DONNEES);
+    console.log(`${operations.length} opération(s) chargée(s) depuis ${FICHIER_DONNEES}.`);
+  } catch (erreur) {
+    console.log(`Impossible de lire ${FICHIER_DONNEES} : ${erreur.message}. Le registre démarre vide.`);
+    operations = [];
+  }
+
+  let continuer = true;
+  while (continuer) {
+    afficherMenu();
+    const choix = await demander('Votre choix : ');
+
+    if (choix === null || choix === '0') {
+      console.log('Au revoir !');
+      continuer = false;
+    } else {
+      try {
+        switch (choix) {
+          case '1': await ajouter(operations); break;
+          case '2': lister(operations); break;
+          case '3': await rechercher(operations); break;
+          case '4': await trier(operations); break;
+          case '5': synthese(operations); break;
+          default:
+            console.log(`Choix inconnu : « ${choix} ». Tapez un chiffre du menu.`);
+        }
+      } catch (erreur) {
+        if (erreur.message.startsWith('TODO')) {
+          console.log(`À compléter : ${erreur.message}`);
+        } else {
+          console.log(`Erreur inattendue : ${erreur.message}`);
+        }
+      }
+    }
+  }
+
   fermerSaisie();
 }
 
