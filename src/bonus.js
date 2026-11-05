@@ -8,11 +8,20 @@ import { syntheseParParcelle } from './synthese.js';
 // Les champs qu'on a le droit de modifier. L'identifiant n'en fait pas partie.
 export const CHAMPS_MODIFIABLES = ['date', 'parcelle', 'culture', 'operation', 'coutFCFA'];
 
+
 // Supprime du registre l'opération qui a cet identifiant.
 // Renvoie l'opération supprimée, ou undefined si elle n'existe pas (le registre ne change pas).
 export function supprimerOperation(operations, id) {
-  throw new Error('TODO Bonus : coder supprimerOperation dans src/bonus.js');
+  const position = operations.findIndex((a) => a.id === id);
+  if (position === -1) {
+    return undefined;
+  }
+  const [supprimee] = operations.splice(position, 1);
+  return supprimee;
 }
+
+
+  //throw new Error('TODO Bonus : coder supprimerOperation dans src/bonus.js');
 
 // Modifie UN champ d'une opération. La nouvelle valeur arrive sous forme de TEXTE et suit
 // les mêmes règles qu'à l'ajout. Renvoie les erreurs : [] si la modification est faite ;
@@ -20,16 +29,45 @@ export function supprimerOperation(operations, id) {
 // Erreurs : identifiant introuvable · champ 'id' (non modifiable) · champ absent de CHAMPS_MODIFIABLES
 //           · valeur refusée par les règles de l'ajout.
 export function modifierOperation(operations, id, champ, valeur) {
-  throw new Error('TODO Bonus : coder modifierOperation dans src/bonus.js');
+  const operation = trouverParId(operations, id);
+  if (operation === undefined) {
+    return [`Identifiant ${id} introuvable.`];
+  }
+  if (champ === 'id') {
+    return ["L'identifiant n'est pas modifiable."];
+  }
+  if (!CHAMPS_MODIFIABLES.includes(champ)) {
+    return [`Champ « ${champ} » non modifiable.`];
+  }
+  const autres = operations.filter((a) => a.id !== id);
+  const saisie = { ...operation, coutFCFA: String(operation.coutFCFA), [champ]: valeur };
+  const erreurs = verifierOperation(saisie, autres);
+  if (erreurs.length > 0) {
+    return erreurs;
+  }
+  operation[champ] = champ === 'coutFCFA' ? versNombre(valeur) : valeur;
+  return [];
 }
+  //throw new Error('TODO Bonus : coder modifierOperation dans src/bonus.js');
+
 
 // Renvoie une COPIE triée par coût décroissant : la plus chère d'abord.
 export function trierParCoutDecroissant(operations) {
-  throw new Error('TODO Bonus : coder trierParCoutDecroissant dans src/bonus.js');
+  return [...operations].sort((a, b) => b.coutFCFA - a.coutFCFA);
 }
+  //throw new Error('TODO Bonus : coder trierParCoutDecroissant dans src/bonus.js');
 
 // Renvoie la parcelle dont le total des coûts est le plus élevé : { parcelle, total },
 // ou null si le registre est vide. En cas d'égalité : la première parcelle rencontrée.
 export function parcelleLaPlusCouteuse(operations) {
-  throw new Error('TODO Bonus : coder parcelleLaPlusCouteuse dans src/bonus.js');
+  let meilleure = null;
+  for (const [parcelle, donnees] of Object.entries(syntheseParParcelle(operations))) {
+    if (meilleure === null || donnees.total > meilleure.total) {
+      meilleure = { parcelle, total: donnees.total };
+    }
+  }
+  return meilleure;
 }
+
+  //throw new Error('TODO Bonus : coder parcelleLaPlusCouteuse dans src/bonus.js');
+
